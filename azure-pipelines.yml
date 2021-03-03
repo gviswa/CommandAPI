@@ -8,6 +8,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    vstsFeed: 'my-vsts-feed' # A series of numbers and letters
 - task: UseDotNet@2
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
@@ -17,7 +22,7 @@ steps:
     command: test
     projects: '**/*Tests/*.csproj'
     testRunTitle: 'xUNit Test Run'
-    
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet publish'
   inputs:
